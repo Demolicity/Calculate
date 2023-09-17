@@ -1,3 +1,8 @@
+# Sure, I can help you translate this Tkinter code to PyQt5. However, please note that PyQt5 doesn't have a direct equivalent for Tkinter's grid layout manager. The closest is QGridLayout. Here's a rough translation of your code:
+# This code creates a PyQt5 application with a similar layout and functionality to your original Tkinter application. However, you'll need to fill in the rest of the labels and entries in the add_entry_set method, and the calculation logic in the calculate_remaining_assignment_weight method.
+
+
+
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLineEdit, QLabel, QTextEdit, QGridLayout
 import json
 
