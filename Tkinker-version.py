@@ -31,56 +31,56 @@ class Application(tk.Frame):
         self.entries = []
         self.add_entry_set()
         self.new_column_label = Label(self, text="Add New Column")
-        self.new_column_label.grid(column=0, row=1)  # Changed from pack() to grid()
+        self.new_column_label.grid(column=0, row=1)  
         
         self.add_button = Button(self, text="+", command=self.add_entry_set)
-        self.add_button.grid(column=0, row=0)  # Changed from pack() to grid()
+        self.add_button.grid(column=0, row=0)  
 
         self.calculate_button = Button(self)
         self.calculate_button["text"] = "Calculate"
         self.calculate_button["command"] = self.calculate_remaining_assignment_weight
-        self.calculate_button.grid(column=1, row=999)  # Changed from pack() to grid()
+        self.calculate_button.grid(column=1, row=999)  
 
         self.result_box = Text(self, height=2, width=50)
         self.result_box.grid()
         self.result_box.grid(column=0, row=1000, columnspan=1000)
-  # Changed from pack() to grid()
+  
 
     def add_entry_set(self):
         entry_set = {}
 
         entry_set['category_label'] = Label(self, text="Grade-Catagory")
-        entry_set['category_label'].grid(column=len(self.entries)*2, row=2)  # Changed from pack() to grid()
+        entry_set['category_label'].grid(column=len(self.entries)*2, row=2)  
         entry_set['category_entry'] = Entry(self)
-        entry_set['category_entry'].grid(column=len(self.entries)*2, row=3)  # Changed from pack() to grid()
+        entry_set['category_entry'].grid(column=len(self.entries)*2, row=3)  
 
         entry_set['assignments_taken_label'] = Label(self, text="Assignments Taken")
-        entry_set['assignments_taken_label'].grid(column=len(self.entries)*2, row=4)  # Changed from pack() to grid()
+        entry_set['assignments_taken_label'].grid(column=len(self.entries)*2, row=4)  
         entry_set['assignments_taken_entry'] = Entry(self)
-        entry_set['assignments_taken_entry'].grid(column=len(self.entries)*2, row=5)  # Changed from pack() to grid()
+        entry_set['assignments_taken_entry'].grid(column=len(self.entries)*2, row=5)  
 
         entry_set['assignments_graded_label'] = Label(self, text="Assignments graded")
-        entry_set['assignments_graded_label'].grid(column=len(self.entries)*2, row=6)  # Changed from pack() to grid()
+        entry_set['assignments_graded_label'].grid(column=len(self.entries)*2, row=6)  
         entry_set['assignments_graded_entry'] = Entry(self)
-        entry_set['assignments_graded_entry'].grid(column=len(self.entries)*2, row=7)  # Changed from pack() to grid()
+        entry_set['assignments_graded_entry'].grid(column=len(self.entries)*2, row=7)  
 
         entry_set['total_assignments_label'] = Label(self, text="Total assignments")
-        entry_set['total_assignments_label'].grid(column=len(self.entries)*2, row=8)  # Changed from pack() to grid()
+        entry_set['total_assignments_label'].grid(column=len(self.entries)*2, row=8)  
         entry_set['total_assignments_entry'] = Entry(self)
-        entry_set['total_assignments_entry'].grid(column=len(self.entries)*2, row=9)  # Changed from pack() to grid()
+        entry_set['total_assignments_entry'].grid(column=len(self.entries)*2, row=9)  
 
         entry_set['category_weightage_label'] = Label(self, text="Weight%")
-        entry_set['category_weightage_label'].grid(column=len(self.entries)*2, row=10)  # Changed from pack() to grid()
+        entry_set['category_weightage_label'].grid(column=len(self.entries)*2, row=10)  
         entry_set['category_weightage_entry'] = Entry(self)
-        entry_set['category_weightage_entry'].grid(column=len(self.entries)*2, row=11)  # Changed from pack() to grid()
+        entry_set['category_weightage_entry'].grid(column=len(self.entries)*2, row=11)  
 
         entry_set['current_grade_label'] = Label(self, text="Current grade In %")
-        entry_set['current_grade_label'].grid(column=len(self.entries)*2, row=12)  # Changed from pack() to grid()
+        entry_set['current_grade_label'].grid(column=len(self.entries)*2, row=12)  
         entry_set['current_grade_entry'] = Entry(self)
-        entry_set['current_grade_entry'].grid(column=len(self.entries)*2, row=13)  # Changed from pack() to grid()
+        entry_set['current_grade_entry'].grid(column=len(self.entries)*2, row=13)  
 
         self.entries.append(entry_set)
-        return entry_set  # Add this line
+        return entry_set  
     
     
     def calculate_remaining_assignment_weight(self):

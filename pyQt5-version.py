@@ -1,20 +1,22 @@
 # Sure, I can help you translate this Tkinter code to PyQt5. However, please note that PyQt5 doesn't have a direct equivalent for Tkinter's grid layout manager. The closest is QGridLayout. Here's a rough translation of your code:
-# This code creates a PyQt5 application with a similar layout and functionality to your original Tkinter application. However, you'll need to fill in the rest of the labels and entries in the add_entry_set method, and the calculation logic in the calculate_remaining_assignment_weight method.
 
 
 
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLineEdit, QLabel, QTextEdit, QGridLayout
+
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLineEdit, QLabel, QTextEdit, QGridLayout, QHBoxLayout 
 import json
 
 class Application(QWidget):
     def __init__(self):
         super().__init__()
         self.entries = []
-        self.layout = QVBoxLayout()
-        self.setLayout(self.layout)
+        self.layout = QVBoxLayout()  # Initialize self.layout
+        self.entry_layout = QHBoxLayout()
+        self.layout.addLayout(self.entry_layout)
         self.create_widgets()
         self.load_saved_data()
-
+        self.setLayout(self.layout)
+        self.categories = {}
     def load_saved_data(self):
         try:
             with open('categories.json', 'r') as f:
@@ -57,14 +59,83 @@ class Application(QWidget):
         entry_set['category_entry'] = QLineEdit()
         grid.addWidget(entry_set['category_entry'], 0, 1)
 
-        # Add the rest of your labels and entries here...
+        entry_set['assignments_taken_label'] = QLabel("Assignments Taken")
+        grid.addWidget(entry_set['assignments_taken_label'], 1, 0)
+        entry_set['assignments_taken_entry'] = QLineEdit()
+        grid.addWidget(entry_set['assignments_taken_entry'], 1, 1)
+
+        entry_set['assignments_graded_label'] = QLabel("Assignments graded")
+        grid.addWidget(entry_set['assignments_graded_label'], 2, 0)
+        entry_set['assignments_graded_entry'] = QLineEdit()
+        grid.addWidget(entry_set['assignments_graded_entry'], 2, 1)
+
+        entry_set['total_assignments_label'] = QLabel("Total assignments")
+        grid.addWidget(entry_set['total_assignments_label'], 3, 0)
+        entry_set['total_assignments_entry'] = QLineEdit()
+        grid.addWidget(entry_set['total_assignments_entry'], 3, 1)
+
+        entry_set['category_weightage_label'] = QLabel("Weight%")
+        grid.addWidget(entry_set['category_weightage_label'], 4, 0)
+        entry_set['category_weightage_entry'] = QLineEdit()
+        grid.addWidget(entry_set['category_weightage_entry'], 4, 1)
+
+        entry_set['current_grade_label'] = QLabel("Current grade In %")
+        grid.addWidget(entry_set['current_grade_label'], 5, 0)
+        entry_set['current_grade_entry'] = QLineEdit()
+        grid.addWidget(entry_set['current_grade_entry'], 5, 1)
 
         self.entries.append(entry_set)
-        self.layout.addLayout(grid)
+        self.entry_layout.addLayout(grid)
         return entry_set
 
     def calculate_remaining_assignment_weight(self):
-        # Your calculation logic here...
+        for entry_set in self.entries:
+            # Load the saved categories from the json file
+            # Get the user input
+            category = entry_set['category_entry'].text()
+            assignments_taken = entry_set['assignments_taken_entry'].text()
+            assignments_graded = entry_set['assignments_graded_entry'].text()
+            total_assignments = entry_set['total_assignments_entry'].text()
+            category_weightage = entry_set['category_weightage_entry'].text()
+            current_grade = entry_set['current_grade_entry'].text()
+
+            # Check that all fields have been filled in
+            if not all([category, assignments_taken, assignments_graded, total_assignments, category_weightage, current_grade]):
+                print("Please fill in all fields.")
+                return
+
+            # Convert the input to the appropriate types
+            assignments_taken = int(assignments_taken)
+            assignments_graded = int(assignments_graded)
+            total_assignments = int(total_assignments)
+            category_weightage = float(category_weightage)
+            current_grade = float(current_grade)
+
+            # Save the category details for future use
+            self.categories[category] = {
+                'assignments_taken': assignments_taken,
+                'assignments_graded': assignments_graded,
+                'total_assignments': total_assignments,
+                'category_weightage': category_weightage,
+                'current_grade': current_grade
+            }
+
+            with open('categories.json', 'w') as f:
+                    json.dump(self.categories, f)
+
+            # Calculate the weight of the grade already earned.
+            earned_weightage = (current_grade / 100) * category_weightage
+
+            # Calculate the remaining weightage that can be earned from the ungraded assignments.
+            remaining_weightage = category_weightage - earned_weightage
+
+            # Calculate the weight of an individual ungraded assignment within the input category.
+            individual_ungraded_assignment_weight = (remaining_weightage / (total_assignments - assignments_graded))
+
+            # Display the calculated individual ungraded assignment weight.
+            result_text = f"The weight of an individual ungraded assignment within the {category} category is: {individual_ungraded_assignment_weight}%"
+            self.result_box.clear()
+            self.result_box.append(result_text)
 
 if __name__ == "__main__":
     app = QApplication([])
