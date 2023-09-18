@@ -1,5 +1,3 @@
-# Sure, I can help you translate this Tkinter code to PyQt5. However, please note that PyQt5 doesn't have a direct equivalent for Tkinter's grid layout manager. The closest is QGridLayout. Here's a rough translation of your code:
-
 
 
 
